@@ -19,4 +19,4 @@ When pricing a component with multiple operations and quantities, a P3L program 
 If the quote item has more than one component (for assembly files), the totals will then sum across all components associated with a quote item.
 
 # Resources
-Visit the resources page at https://help.paperlessparts.com/ for more detailed information on how to work with P3L. This repo is meant to be a resource for many examples for you to use/start from in your profiles.
+Visit the resources page at https://help.paperlessparts.com/ for more detailed information on how to work with P3L.
