@@ -37,7 +37,7 @@ if features <= 25:
     part_complexity.update(1)
 elif 25 < features <= 75:
     part_complexity.update(2)
-elif 75 < features or 6 < mill.setup_count:
+elif 75 < features or 6 < lathe.setup_count:
     part_complexity.update(3)
 part_complexity.freeze()
 
