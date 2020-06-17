@@ -24,13 +24,9 @@ for setup in get_setups(mill):
 features = var('Feature Count', 0, '', number, frozen=False)
 time_per_feature = var('Time Per Feature (Minutes)', 5, '', number)
 setup_time = var('setup_time', 0, '', number, frozen=False)
-labor_rate = var('Labor Rate ($)', 65, '', currency, frozen=False)
+labor_rate = var('Labor Rate ($)', 65, '', currency)
 
-## B - Update Labor Rate based on global labor rate. To not use the global labor rate, simply do not use a dynamic variable.
-labor_rate.update(get_custom_attribute('labor_rate', 0))
-labor_rate.freeze()
-
-## C.3 - Update Features and Setup Time based on calculated values
+## C.2 - Update Features and Setup Time based on calculated values
 features.update(feature_count + feedback_count)
 features.freeze()
 setup_time.update(max(0.5, (

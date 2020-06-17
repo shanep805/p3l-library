@@ -33,22 +33,18 @@ stock_volume.freeze()
 
 ## C - Project Variables
 ## C.1 Define Features
-labor_rate = var('Labor Rate ($)', 0, '', currency, frozen = False)
+labor_rate = var('Labor Rate ($)', 0, '', currency)
 features = var('Feature Count', 0, '', number, frozen=False)
 setup_time_per_setup = var('Setup Time Per Setup', 0.5, 'Setup time per setup in hours', number)
 setup_count = var('Setup Count', 0, '', number, frozen = False)
 setup_time = var('setup_time', 0, 'Setup time, specified in hours', number, frozen = False)
-
-## C.2 - Update variables based on interrogation and defined values
-labor_rate.update(get_custom_attribute('labor_rate', 0))			## Update Labor Rate based on global labor rate. To not use the global labor rate, simply do not use a dynamic variable.
-labor_rate.freeze()
 
 setup_count.update(lathe.setup_count)
 setup_count.freeze()
 setup_time.update(setup_count * setup_time_per_setup)
 setup_time.freeze()
 
-## C.3 - Gather Features and Feedback Count
+## C.2 - Gather Features and Feedback Count
 feature_count = 0
 feedback_count = 0
 
@@ -58,7 +54,7 @@ for setup in get_setups(lathe):
 features.update(feature_count + feedback_count)
 features.freeze()
 
-## C.4 - Define number of tools required based on Feature and Feedback count. The default number of features per tool is 4
+## C.3 - Define number of tools required based on Feature and Feedback count. The default number of features per tool is 4
 num_tools = var('Number of Tools', 0, '', number, frozen=False)
 num_tools.update(ceil(features / 4))
 num_tools.freeze()

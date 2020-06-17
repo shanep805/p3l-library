@@ -1,11 +1,7 @@
 ## A - Define Setup Time, Runtime, and Labor Rate variables
 setup_time = var('setup_time', 0, '', number)
 runtime = var('runtime', 0, '', number)
-labor_rate = var('Labor Rate ($)', 0, '', currency, frozen = False)
-
-## B - Update Labor Rate based on global labor rate. To not use the global labor rate, simply do not use a dynamic variable.
-labor_rate.update(get_custom_attribute('labor_rate', 0))
-labor_rate.freeze()
+labor_rate = var('Labor Rate ($)', 0, '', currency)
 
 ## B - Compile Setup Cost and Cycle Cost
 setup_cost = setup_time * labor_rate

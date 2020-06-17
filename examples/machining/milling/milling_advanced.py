@@ -125,13 +125,9 @@ runtime.freeze()
 
 ## G. - Costs
 ## G.1 - Define Labor Rate
-labor_rate = var('Labor Rate ($)', 65, '', currency, frozen = False)
+labor_rate = var('Labor Rate ($)', 65, '', currency)
 
-## B - Update Labor Rate based on global labor rate. To not use the global labor rate, simply do not use a dynamic variable.
-labor_rate.update(get_custom_attribute('labor_rate', 0))
-labor_rate.freeze()
-
-## G.3 - Calculate Total Cycle Cost and Setup Cost
+## G.2 - Calculate Total Cycle Cost and Setup Cost
 total_cycle_cost = part.qty * runtime * labor_rate
 setup_cost = setup_time * labor_rate
 
