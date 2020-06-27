@@ -20,25 +20,11 @@ surface_area_ratio = part.area / bbox_area
 ## B.3 - Define Feature and Feedback Count, and certain manufacturability warning counts
 feature_count = 0
 feedback_count = 0
-deep_pocket_count = 0
-partial_hole_count = 0
-deep_hole_count = 0
-small_hole_thresh = 0.0625
-small_hole_count = 0
-deep_cut_radius_count = 0
 
 ## B.4 - Update the various feature counts based on interrogation
 for setup in get_setups(mill):
     feature_count += (len(get_features(setup)) - len(get_features(setup, name='hole')))
     feedback_count += (len(get_feedback(setup)))
-    deep_pocket_count += (len(get_feedback(setup, name='deep_circular_pocket')))
-    partial_hole_count += (len(get_feedback(setup, name='partial_hole')))
-    deep_hole_count += (len(get_feedback(setup, name='deep_hole')))
-    deep_cut_radius_count += (len(get_feedback(setup, name='deep_cut_radius')))
-    for simple_hole in get_features(setup, name='machined_simple_hole'):
-        is_small_hole = small_hole_thresh > simple_hole.properties.diameter
-        if is_small_hole:
-            small_hole_count += (len(get_feedback(setup, name='small_hole_diameter')))
 
 ## B.5 - Update the Total Feature Count based on defined Feature and Feedback interrogation
 features = var('Feature Count', 0, '', number, frozen=False)
@@ -62,18 +48,6 @@ elif 75 < features or 6 < mill.setup_count:
 ## C.3 - Update Part Complexity if certain manufacturability warnings present
 if part_complexity == 1:
     if min_size < 0.25 and max_size < 0.25 and med_size < 0.25:
-        part_complexity.update(2)
-    elif deep_pocket_count > 0:
-        part_complexity.update(2)
-    elif partial_hole_count > 0:
-        part_complexity.update(2)
-    elif deep_hole_count > 0:
-        part_complexity.update(2)
-    elif small_hole_count > 0:
-        part_complexity.update(2)
-    elif surface_area_ratio > 1.5:
-        part_complexity.update(2)
-    elif deep_cut_radius_count > 0:
         part_complexity.update(2)
 part_complexity.freeze()
 

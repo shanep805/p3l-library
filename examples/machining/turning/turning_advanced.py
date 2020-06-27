@@ -12,8 +12,10 @@ turning_radius = var('Turning Radius', 0, 'Outermost radius of part in inches', 
 turning_length = var('Turning Length', 0, 'Length of part along turning axis in inches', number, frozen=False)
 radial_buffer = var('Radial Stock Buffer, in', 0.0625, 'Buffer applied to the outer radius of part in inches', number)
 length_buffer = var('Length Stock Buffer, in', 0.125, 'Buffer to the length of the part along the turning axis in inches', number)
-part_volume = var('Part Volume', 0, '', number, frozen = False)
 stock_volume = var('Stock Volume (in^3)', 0, '', number, frozen = False)
+part_volume = var('Part Volume', 0, '', number, frozen = False)
+volume_removed = var('Volume Removed (in^3)', 0, '', number, frozen = False)
+percent_volume_removed = var('Percent Volume Removed (%)', 0, '', number, frozen = False)
 
 ## B.2 - Update variables based on interrogated values
 turning_radius.update(lathe.stock_radius)
@@ -24,9 +26,9 @@ turning_length.freeze()
 stock_radius = turning_radius + radial_buffer
 stock_length = turning_length + length_buffer
 
-part_volume.update(part.volume)
+part_volume.update(round(part.volume, 3))
 part_volume.freeze()
-stock_volume.update(stock_radius**2 * 3.1415926535 * turning_length)
+stock_volume.update(round(stock_radius**2 * 3.1415926535 * turning_length, 3))
 stock_volume.freeze()
 
 ## -------------------------------------------------------------------------------------------------------------------- ##
@@ -65,7 +67,6 @@ num_tools.freeze()
 ## D.1 - Set Removal Rate, Volume Cut Rate, Volume Removed, Runtime, Runtime per Setup and Runtime Multiplier variables
 removal_rate = var('Material Removal Rate', 1, 'Material removal rate in cu.in./min', number, frozen = False)
 vol_cut_rate = var('Volume Cut Rate (in^3 / hr)', 0, '', number, frozen = False)
-volume_removed = var('Volume Removed (in^3)', 0, '', number, frozen = False)
 runtime = var('runtime', 0, 'Runtime, specified in hours', number, frozen=False)
 runtime_per_setup = var('Runtime per Setup (min)', 2, '', number)
 runtime_mult = var('Runtime Multiplier', 1, '', number, frozen = False)
@@ -82,8 +83,11 @@ else:
 runtime_mult.freeze()
 
 ## D.3 - Update Volume Removed based on interrogated values
-volume_removed.update(stock_volume - part.volume)
+volume_removed.update(round(stock_volume - part.volume, 3))
 volume_removed.freeze()
+
+percent_volume_removed.update(round((volume_removed / stock_volume) * 100, 2))
+percent_volume_removed.freeze()
 
 ## D.4 - Update Removal Rate based on total volume removed
 if volume_removed <= 1:
