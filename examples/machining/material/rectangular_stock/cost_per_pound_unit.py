@@ -22,7 +22,7 @@ cost_per_pound.freeze()
 
 ## C - Part Variables
 ## C.1 - Define Buffer, Material Volume, Material Weight, and Material Cost.
-buffer = var('Material Buffer (in)', 0, 'Buffer in inches for raw material size', number)
+buffer = var('Material Buffer (in)', 0.25, 'Buffer in inches for raw material size', number)
 mat_volume = (part.size_x + buffer) * (part.size_y + buffer) * (part.size_z + buffer)
 mat_weight = var('Pounds Per Part', 0, 'Per unit', number, frozen=False)
 mat_cost = var('Material Unit Cost', 0, '', currency, frozen=False)

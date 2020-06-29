@@ -12,16 +12,15 @@ min_size = min(part.size_x, part.size_y, part.size_z)
 max_size = max(part.size_x, part.size_y, part.size_z)
 med_size = median(part.size_x, part.size_y, part.size_z)
 
-## B.2 - Define Feature and Feedback Count
+## Define Part Features and Feedback
 feature_count = 0
 feedback_count = 0
+for feature in get_features(lathe):
+    feature_count = (len(get_features(lathe)))
 
-## B.3 - Update the Feature and Feedback count based on interrogation
-for setup in get_setups(lathe):
-    feature_count += (len(get_features(setup)) - len(get_features(setup, name='hole')))
-    feedback_count += (len(get_feedback(setup)))
+for feedback in get_feedback(lathe):
+    feedback_count = (len(get_feedback(lathe)))
 
-## B.4 - Update the Total Feature Count based on defined Feature and Feedback interrogation
 features = var('Feature Count', 0, '', number, frozen=False)
 features.update(feature_count + feedback_count)
 features.freeze()

@@ -39,6 +39,9 @@ radial_buffer = var('Radial Buffer (in)', 0.0625, 'Buffer in inches for radius o
 turning_length.update(lathe.stock_length)
 turning_length.freeze()
 
+turning_radius.update(lathe.stock_radius)
+turning_radius.freeze()
+
 stock_length = turning_length + length_buffer
 bar_radius.update(ceil((turning_radius + radial_buffer) * 4) / 4)
 bar_radius.freeze()
@@ -55,9 +58,9 @@ else:
 
 ## D - Material Calculations
 ## D.1 - Define Material Volume, Material Weight, and Material Cost
-mat_weight = var('Material Weight', 0, '', number, frozen = False)
-mat_cost = var('Material Cost', 0, '', number, frozen = False)
-cost_per_unit = var('Cost Per Unit ($)', 0, '', number, frozen = False)
+mat_weight = var('Material Weight (lbs)', 0, '', number, frozen = False)
+mat_cost = var('Material Cost ($)', 0, '', currency, frozen = False)
+cost_per_unit = var('Cost Per Unit ($)', 0, '', currency, frozen = False)
 
 ## D.2 - Update variables based on calculations
 mat_volume = bar_radius**2 * 3.1415926535 * bar_length
@@ -68,7 +71,7 @@ mat_weight.freeze()
 mat_cost.update(round(mat_weight * cost_per_pound, 2))
 mat_cost.freeze()
 
-cost_per_unit.update(mat_cost / parts_per_bar)
+cost_per_unit.update(round(mat_cost / parts_per_bar, 3))
 cost_per_unit.freeze()
 
 ## -------------------------------------------------------------------------------------------------------------------- ##

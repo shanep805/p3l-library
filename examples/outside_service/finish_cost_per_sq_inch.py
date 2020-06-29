@@ -9,7 +9,11 @@
 units_in()
 
 price_per_sq_inch = var('Price Per Square Inch', 0.01, '', currency)
+area = var('Part Area', 0, '', number, frozen = False)
+area.update(round(part.area, 3))
+area.freeze()
+
 added_lead_time = var('Added Lead Time', 0, 'Days of added lead time for outside_service service', number)
 
-PRICE = price_per_sq_inch * part.area * part.qty
+PRICE = price_per_sq_inch * area * part.qty
 DAYS = added_lead_time

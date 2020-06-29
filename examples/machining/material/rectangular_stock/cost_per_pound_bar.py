@@ -29,19 +29,12 @@ bar_end = var('Bar End, in', 0, 'Length of bar allocated for holding', number)
 parts_per_bar = var('Parts Per Bar', 0, '', number, frozen=False)
 
 ## C.2 - Define Part Variables
-length = var('Part Length, in', 0, '', number, frozen = False)
-width = var('Part Width, in', 0, '', number, frozen = False)
-height = var('Part Height, in', 0, '', number, frozen = False)
+length = max(part.size_x, part.size_y, part.size_z)
+width = median(part.size_x, part.size_y, part.size_z)
+height = min(part.size_x, part.size_y, part.size_z)
 buffer = var('Part Buffer, in', 0.25, number)
 
 ## C.3 - Update variables based on geometric interrogation
-length.update(max(part.size_x, part.size_y, part.size_z))
-length.freeze()
-width.update(median(part.size_x, part.size_y, part.size_z))
-width.freeze()
-height.update(min(part.size_x, part.size_y, part.size_z))
-height.freeze()
-
 bar_width.update(ceil(width * 8) / 8)				## Round to the nearest 1/8th inch.
 bar_width.freeze()
 bar_height.update(ceil(height * 8) / 8)				## Round to the nearest 1/8th inch.
@@ -60,8 +53,8 @@ else:
 ## D - Material Calculations
 ## D.1 - Define Material Volume, Material Weight, and Material Cost
 mat_weight = var('Material Weight', 0, '', number, frozen = False)
-mat_cost = var('Material Cost', 0, '', number, frozen = False)
-cost_per_unit = var('Cost Per Unit ($)', 0, '', number, frozen = False)
+mat_cost = var('Material Cost', 0, '', currency, frozen = False)
+cost_per_unit = var('Cost Per Unit ($)', 0, '', currency, frozen = False)
 
 ## D.2 - Update variables based on calculations
 mat_volume = bar_length * bar_width * bar_height
@@ -72,7 +65,7 @@ mat_weight.freeze()
 mat_cost.update(round(mat_weight * cost_per_pound, 2))
 mat_cost.freeze()
 
-cost_per_unit.update(mat_cost / parts_per_bar)
+cost_per_unit.update(round(mat_cost / parts_per_bar, 3))
 cost_per_unit.freeze()
 
 ## -------------------------------------------------------------------------------------------------------------------- ##
