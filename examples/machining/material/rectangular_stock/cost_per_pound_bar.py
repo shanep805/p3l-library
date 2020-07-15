@@ -32,7 +32,7 @@ parts_per_bar = var('Parts Per Bar', 0, '', number, frozen=False)
 length = max(part.size_x, part.size_y, part.size_z)
 width = median(part.size_x, part.size_y, part.size_z)
 height = min(part.size_x, part.size_y, part.size_z)
-buffer = var('Part Buffer, in', 0.25, number)
+buffer = var('Part Buffer, in', 0, number)
 
 ## C.3 - Update variables based on geometric interrogation
 bar_width.update(ceil(width * 8) / 8)				## Round to the nearest 1/8th inch.
@@ -41,7 +41,7 @@ bar_height.update(ceil(height * 8) / 8)				## Round to the nearest 1/8th inch.
 bar_height.freeze()
 
 # C.4 - Update Parts Per Bar based on Bar Length and Part Length
-parts_per_bar.update(floor((bar_length - bar_end) / (length + cutoff + facing)))
+parts_per_bar.update(floor((bar_length - bar_end) / (length + buffer + cutoff + facing)))
 parts_per_bar.freeze()
 if parts_per_bar > 0:
     bars = ceil(part.qty / parts_per_bar)
