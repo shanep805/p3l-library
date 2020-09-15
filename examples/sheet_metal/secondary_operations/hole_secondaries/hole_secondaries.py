@@ -53,14 +53,26 @@ sh_runtime = simple_hole_count * runtime_per_simple_hole
 runtime.update((cs_runtime + cb_runtime + sh_runtime) / 3600.0)
 runtime.freeze()
 
-# TODO: add crew considerations
+max_size = var('Part Max Dim', 0, '', number, frozen=False)
+max_size.update(get_workpiece_value('flat_length', max(sheet_metal.size_x, sheet_metal.size_y)))
+max_size.freeze()
+part_weight = var('Part Weight', 0, '', number, frozen=False)
+part_weight.update(get_workpiece_value('weight', part.weight))
+part_weight.freeze()
+
+crew_size_thresh = var('Crew Size Thresh', 48, 'Size of part in inches requiring additional crew', number)
+crew_weight_thresh = var('Crew Weight Thresh', 40, 'Weight of part in pounds requiring additional crew', number)
+crew = var('Crew', 1, 'Number of people assigned to attend work center', number, frozen=False)
+if (max_size >= crew_size_thresh and max_size) or (part_weight >= crew_weight_thresh and part_weight):
+    crew.update(2)
+crew.freeze()
 
 labor_rate = var('Labor Rate', 100, 'Cost per hour for setup', currency)
 machine_rate = var('Machine Rate', 50, 'Cost per hour for run', currency)
 
 total_cycle_time = part.qty * runtime
 
-setup_cost = labor_rate * setup_time
+setup_cost = labor_rate * setup_time * crew
 machine_cost = machine_rate * total_cycle_time
 
 PRICE = setup_cost + machine_cost

@@ -7,5 +7,8 @@ If you want to specify a different value for automatically detecting manual dril
 
 All setup counts and total counts for each type can be overridden at quote time.
 
+If part size or weight is beyond a certain threshold, you will need more than one operator to hold workpiece, which will increase crew and setup costs.
+
 **Operation Category**: Operation
+
 **Is Outside Service**: false
