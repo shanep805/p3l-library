@@ -11,5 +11,4 @@ PRICE = setup_time * labor_rate
 DAYS = 0
 
 # D - Set workpiece values to be used in subsequent operations.
-set_workpiece_value('Total Setup Time', get_workpiece_value('Total Setup Time', 0) + setup_time)			# A - Cumulative project setup time
-set_workpiece_value('Operation Count', get_workpiece_value('Operation Count', 0) + 1)						# B - Cumulative operation count
+set_workpiece_value('total_setup_time', get_workpiece_value('total_setup_time', 0) + setup_time)			# A - Cumulative project setup time

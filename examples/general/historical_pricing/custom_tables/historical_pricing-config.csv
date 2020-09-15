@@ -1,0 +1,7 @@
+"column_name","value_type"
+"part_no","string"
+"part_rev","string"
+"quote_no","string"
+"bom_qty","numeric"
+"req_qty","numeric"
+"unit_price","numeric"

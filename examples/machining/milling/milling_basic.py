@@ -16,6 +16,5 @@ PRICE = setup_cost + cycle_cost
 DAYS = 0
 
 # E - Set workpiece values to be used in subsequent operations.
-set_workpiece_value('Total Setup Time', get_workpiece_value('Total Setup Time', 0) + setup_time)			# A - Cumulative project setup time
-set_workpiece_value('Total Runtime', get_workpiece_value('Total Runtime', 0) + runtime)						# B - Cumulative project runtime
-set_workpiece_value('Operation Count', get_workpiece_value('Operation Count', 0) + 1)						# C - Cumulative operation count
+set_workpiece_value('total_setup_time', get_workpiece_value('total_setup_time', 0) + setup_time)			# A - Cumulative project setup time
+set_workpiece_value('total_runtime', get_workpiece_value('total_runtime', 0) + runtime)						# B - Cumulative project runtime

@@ -1,0 +1,8 @@
+[
+  {
+    "name": "PC Piece Price",
+    "path": "examples/purchased_components/piece_price",
+    "is_root_operation": false,
+    "is_assembly_operation": false
+  }
+]

@@ -1,0 +1,5 @@
+column_name,value_type
+material_family,string
+thickness,numeric
+cut_rate,numeric
+pierce_time,numeric

@@ -23,8 +23,7 @@ labor_rate = var('Labor Rate ($)', 65, '', currency)
 # C.2 - Update Features and Setup Time based on calculated values
 features.update(feature_count + feedback_count)
 features.freeze()
-setup_time.update(max(0.5, (
-            features * time_per_feature) / 60))  # We set the Setup Time to a minimum of 0.5 hours (30 minutes). If the calculated programming time is greater than 30 minutes, we use that time).
+setup_time.update(max(0.5, (features * time_per_feature) / 60))  # We set the Setup Time to a minimum of 0.5 hours (30 minutes). If the calculated programming time is greater than 30 minutes, we use that time).
 setup_time.freeze()
 
 # D - Final Calculations
@@ -35,6 +34,4 @@ PRICE = setup_time * labor_rate
 DAYS = 0
 
 # D.3 - Set workpiece values to be used in subsequent operations.
-set_workpiece_value('Total Setup Time',
-                    get_workpiece_value('Total Setup Time', 0) + setup_time)  # A - Cumulative project setup time
-set_workpiece_value('Operation Count', get_workpiece_value('Operation Count', 0) + 1)  # B - Cumulative operation count
+set_workpiece_value('total_setup_time', get_workpiece_value('total_setup_time', 0) + setup_time)  # A - Cumulative project setup time

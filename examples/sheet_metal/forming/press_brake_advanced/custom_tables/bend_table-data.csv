@@ -1,0 +1,14 @@
+material_family,thickness,base_runtime,base_setup_time,long_bend_thresh1,long_bend_thresh2,large_radii_thresh1,large_radii_thresh2,runtime_increment,setup_time_increment
+Copper,0.2,35.0,6.0,40.0,60.0,1.0,3.0,25.0,1.0
+Copper,0.001,25.0,6.0,60.0,60.0,0.5,2.0,25.0,1.0
+Stainless Steel,0.2,40.0,6.0,25.0,40.0,1.5,3.5,30.0,1.0
+Stainless Steel,0.1,30.0,6.0,35.0,55.0,1.0,2.0,30.0,1.0
+Stainless Steel,0.001,25.0,6.0,40.0,60.0,0.5,2.0,30.0,1.0
+Carbon Steel,0.2,40.0,6.0,25.0,40.0,1.5,3.5,30.0,1.0
+Carbon Steel,0.1,30.0,6.0,35.0,55.0,1.0,2.0,30.0,1.0
+Carbon Steel,0.001,20.0,6.0,40.0,60.0,0.5,2.0,30.0,1.0
+Steel,0.2,40.0,6.0,25.0,40.0,1.5,3.5,30.0,1.0
+Steel,0.1,30.0,6.0,35.0,55.0,1.0,2.0,30.0,1.0
+Steel,0.001,20.0,6.0,40.0,60.0,0.5,2.0,30.0,1.0
+Aluminum,0.2,25.0,6.0,40.0,60.0,1.0,3.0,20.0,1.0
+Aluminum,0.001,20.0,6.0,60.0,60.0,0.5,2.0,20.0,1.0

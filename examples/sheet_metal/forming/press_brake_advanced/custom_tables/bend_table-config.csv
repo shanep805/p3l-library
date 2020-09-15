@@ -1,0 +1,11 @@
+column_name,value_type
+material_family,string
+thickness,numeric
+base_runtime,numeric
+base_setup_time,numeric
+long_bend_thresh1,numeric
+long_bend_thresh2,numeric
+large_radii_thresh1,numeric
+large_radii_thresh2,numeric
+runtime_increment,numeric
+setup_time_increment,numeric

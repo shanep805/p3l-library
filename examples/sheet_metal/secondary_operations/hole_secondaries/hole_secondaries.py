@@ -53,6 +53,8 @@ sh_runtime = simple_hole_count * runtime_per_simple_hole
 runtime.update((cs_runtime + cb_runtime + sh_runtime) / 3600.0)
 runtime.freeze()
 
+# TODO: add crew considerations
+
 labor_rate = var('Labor Rate', 100, 'Cost per hour for setup', currency)
 machine_rate = var('Machine Rate', 50, 'Cost per hour for run', currency)
 

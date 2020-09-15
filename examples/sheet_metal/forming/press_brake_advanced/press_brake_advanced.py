@@ -1,9 +1,6 @@
 # collects bend runtime and bend setup time based on the characteristics of bends in the part
 # there is a base bend runtime and setup time, and based on things like angle, length, radius
 # the times will increment. Difficulty points will multiply runtime increments
-# For this operation to work, it must reference a custom table with the name bend_table
-# The column names are: material_family, thickness, base_runtime, base_setup_time, long_bend_thresh1, long_bend_thresh2,
-# large_radii_thresh1, large_radii_thresh2, runtime_increment, setup_time_increment
 
 units_in()
 sheet_metal = analyze_sheet_metal()
@@ -12,7 +9,7 @@ setup_time = var('setup_time', 0, 'Setup time in hours', number, frozen=False)
 runtime = var('runtime', 0, 'Runtime in hours', number, frozen=False)
 
 thickness = var('Thickness', 0, 'thickness of sheet metal part', number, frozen=False)
-thickness.update(sheet_metal.thickness)
+thickness.update(get_workpiece_value('thickness', sheet_metal.thickness))
 thickness.freeze()
 
 # perform lookup to bend table to get threshold and time values
@@ -63,17 +60,17 @@ large_length_thresh.freeze()
 
 # establish our variables that we will use as pricing levers in the operation
 # also establish their local tracking variables
-base_bend_count = var('Bend Count', 0, 'Number of bends detected', number, frozen=False)
+base_bend_count = var('Total Bends', 0, 'Number of bends detected', number, frozen=False)
 bbc = 0
-non_ninety_bends = var('Non-90 Bend Count', 0, 'Number of non-90 degree bends', number, frozen=False)
+non_ninety_bends = var('Non-90 Bends', 0, 'Number of non-90 degree bends', number, frozen=False)
 nnb = 0
-med_rads = var('Medium Rads', 0, 'Number of bends with medium rads', number, frozen=False)
+med_rads = var('Med Rad Bends', 0, 'Number of bends with medium rads', number, frozen=False)
 mr = 0
-large_rads = var('Large Rads', 0, 'Number of bends with large rads', number, frozen=False)
+large_rads = var('Large Rad Bends', 0, 'Number of bends with large rads', number, frozen=False)
 lr = 0
-med_lengths = var('Medium Lengths', 0, 'Number of bends with medium length', number, frozen=False)
+med_lengths = var('Med Length Bends', 0, 'Number of bends with medium length', number, frozen=False)
 ml = 0
-large_lengths = var('Large Lengths', 0, 'Number of bends with large length', number, frozen=False)
+large_lengths = var('Large Length Bends', 0, 'Number of bends with large length', number, frozen=False)
 ll = 0
 
 # first track standard bends
@@ -101,6 +98,110 @@ for bend in get_features(sheet_metal, name='bend'):
         ml += 1
     elif is_length_large:
         ll += 1
+
+# track open_hems as standard bends
+for bend in get_features(sheet_metal, name='open_hem'):
+    # increment bend count variable
+    bbc += 1
+
+    # increment for angle if necessary
+    if not is_close(bend.properties.angle, 90):
+        nnb += 1
+
+    # if radius is medium or large, increment
+    r = bend.properties.radius
+    is_rad_medium = medium_radius_thresh <= r < large_radius_thresh or is_close(r, medium_radius_thresh)
+    is_rad_large = r >= large_radius_thresh or is_close(r, large_radius_thresh)
+    if is_rad_medium:
+        mr += 1
+    elif is_rad_large:
+        lr += 1
+
+    l = bend.properties.length
+    is_length_medium = medium_length_thresh <= l < large_length_thresh or is_close(l, medium_length_thresh)
+    is_length_large = l >= large_length_thresh or is_close(l, large_length_thresh)
+    if is_length_medium:
+        ml += 1
+    elif is_length_large:
+        ll += 1
+
+# track tear drops as standard bends
+for bend in get_features(sheet_metal, name='tear_drop'):
+    # increment bend count variable
+    bbc += 1
+
+    # increment for angle if necessary
+    if not is_close(bend.properties.angle, 90):
+        nnb += 1
+
+    # if radius is medium or large, increment
+    r = bend.properties.radius
+    is_rad_medium = medium_radius_thresh <= r < large_radius_thresh or is_close(r, medium_radius_thresh)
+    is_rad_large = r >= large_radius_thresh or is_close(r, large_radius_thresh)
+    if is_rad_medium:
+        mr += 1
+    elif is_rad_large:
+        lr += 1
+
+    l = bend.properties.length
+    is_length_medium = medium_length_thresh <= l < large_length_thresh or is_close(l, medium_length_thresh)
+    is_length_large = l >= large_length_thresh or is_close(l, large_length_thresh)
+    if is_length_medium:
+        ml += 1
+    elif is_length_large:
+        ll += 1
+
+# track curls as standard bends
+for bend in get_features(sheet_metal, name='curl'):
+    # increment bend count variable
+    bbc += 1
+
+    # increment for angle if necessary
+    if not is_close(bend.properties.angle, 90):
+        nnb += 1
+
+    # if radius is medium or large, increment
+    r = bend.properties.radius
+    is_rad_medium = medium_radius_thresh <= r < large_radius_thresh or is_close(r, medium_radius_thresh)
+    is_rad_large = r >= large_radius_thresh or is_close(r, large_radius_thresh)
+    if is_rad_medium:
+        mr += 1
+    elif is_rad_large:
+        lr += 1
+
+    l = bend.properties.length
+    is_length_medium = medium_length_thresh <= l < large_length_thresh or is_close(l, medium_length_thresh)
+    is_length_large = l >= large_length_thresh or is_close(l, large_length_thresh)
+    if is_length_medium:
+        ml += 1
+    elif is_length_large:
+        ll += 1
+
+# track offsets as 2x bends
+for bend in get_features(sheet_metal, name='offset'):
+    # increment bend count variable
+    bbc += 2
+
+    # increment for angle if necessary
+    if not is_close(bend.properties.angle, 90):
+        nnb += 2
+
+    # if radius is medium or large, increment
+    r = bend.properties.radius
+    is_rad_medium = medium_radius_thresh <= r < large_radius_thresh or is_close(r, medium_radius_thresh)
+    is_rad_large = r >= large_radius_thresh or is_close(r, large_radius_thresh)
+    if is_rad_medium:
+        mr += 2
+    elif is_rad_large:
+        lr += 2
+
+    l = bend.properties.length
+    is_length_medium = medium_length_thresh <= l < large_length_thresh or is_close(l, medium_length_thresh)
+    is_length_large = l >= large_length_thresh or is_close(l, large_length_thresh)
+    if is_length_medium:
+        ml += 2
+    elif is_length_large:
+        ll += 2
 
 # now update and freeze our op variables and then calculate times so overrides at
 # quote time can take effect as runtime and setup time increments
@@ -136,32 +237,11 @@ large_lengths.freeze()
 total_bend_setup += large_lengths * 2 * st_increment
 total_bend_run += large_lengths * 2 * rt_increment
 
-# now track hems, curls, and teardrops into hem category
-ohc = len(get_features(sheet_metal, name='open_hem'))
-tdc = len(get_features(sheet_metal, name='tear_drop'))
-cc = len(get_features(sheet_metal, name='curl'))
-hem_count = var('Hem Count', 0, 'Number of hems and curls', number, frozen=False)
-hem_count.update(ohc + tdc + cc)
-hem_count.freeze()
-
-# increment runtimes and setup times 2x base value for every hem, curl, and teardrop found in the geometry
-total_hem_setup = 2 * base_bend_setup_time * hem_count
-total_hem_run = 2 * base_bend_runtime * hem_count
-
-# now track offsets
-offset_count = var('Offset Count', 0, 'Number of offsets', number, frozen=False)
-offset_count.update(len(get_features(sheet_metal, name='offset')))
-offset_count.freeze()
-
-# increment 2x standard times for each presence of offset
-offset_setup = 2 * base_bend_setup_time * offset_count
-offset_run = 2 * base_bend_runtime * offset_count
-
 # establish final times as a sum of all above
 # convert times to hours
-setup_time.update((total_bend_setup + total_hem_setup + offset_setup) / 60)
+setup_time.update(total_bend_setup / 60)
 setup_time.freeze()
-runtime.update((total_bend_run + total_hem_run + offset_run) / 3600)
+runtime.update(total_bend_run / 3600)
 runtime.freeze()
 
 setup_labor_rate = var('Setup Labor Rate', 50, 'Labor cost per hour to set up work center', currency)
@@ -171,17 +251,17 @@ efficiency = var('Efficiency', 100, 'Percentage of real time the work center is 
 percent_attended = var('Percent Attended', 80, 'Percentage of time work center must be attended', number)
 
 max_size = var('Part Max Dim', 0, '', number, frozen=False)
-max_size.update(max(sheet_metal.size_x, sheet_metal.size_y))
+max_size.update(get_workpiece_value('flat_length', max(sheet_metal.size_x, sheet_metal.size_y)))
 max_size.freeze()
 part_weight = var('Part Weight', 0, '', number, frozen=False)
-part_weight.update(part.weight)
+part_weight.update(get_workpiece_value('weight', part.weight))
 part_weight.freeze()
 
 crew_size_thresh = var('Crew Size Thresh', 48, 'Size of part in inches requiring additional crew', number)
 crew_weight_thresh = var('Crew Weight Thresh', 40, 'Weight of part in pounds requiring additional crew', number)
 crew = var('Crew', 1, 'Number of people assigned to attend work center', number, frozen=False)
 if (max_size >= crew_size_thresh and max_size) or (part_weight >= crew_weight_thresh and part_weight):
-  crew.update(2)
+    crew.update(2)
 crew.freeze()
 
 total_cycle_time = part.qty * runtime

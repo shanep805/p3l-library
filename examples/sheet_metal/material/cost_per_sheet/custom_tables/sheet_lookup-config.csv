@@ -1,0 +1,8 @@
+column_name,value_type
+material,string
+provider,string
+thickness,numeric
+length,numeric
+width,numeric
+display,string
+sheet_cost,numeric
