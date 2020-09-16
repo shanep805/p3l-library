@@ -1,10 +1,5 @@
-# This operation is for costing a punch_cost_per_sheet laser_cost_per_sheet machine. This operation assumes it will hit all single hits with the punch_cost_per_sheet
-# and all larger more complicated contours with the laser_cost_per_sheet.
-# It references a custom table with the name laser_cut_rates with column names material_family, thickness, cut_rate, pierce_time.
-# You will have to setup a custom table with matching column names to get this formula to compile
-#
-# When working with runtime or setup_time in your pricing formula, time will always be in hours.  The display units
-# can be set on the operation level or when quoting.
+# This operation assumes it will hit all single hits with the punch_cost_per_sheet
+# and all larger more complicated contours with the laser.
 
 units_in()
 sheet_metal = analyze_sheet_metal()
@@ -56,7 +51,6 @@ setup_time_per_tool = var('Setup time per tool', 10.0, 'Setup time per unique pu
 punch_tool_setup_time = var('Punch Tooling Setup', 0, 'Setup time in minutes for unique punch_cost_per_sheet tools', number, frozen=False)
 punch_tool_setup_time.update(setup_time_per_tool * single_hit_setups)
 punch_tool_setup_time.freeze()
-
 
 # now calculate punch_cost_per_sheet runtime based on single hits only and a time per hit
 single_hit_count = var('Single Hit Count', 0, 'Total number of single hit strokes', number, frozen=False)
