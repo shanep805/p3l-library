@@ -2,7 +2,7 @@
 # specified on each individual purchased component
 
 hardware_count = var('Hardware Count', 0, '', number, frozen=False)
-hardware_count.update(part.purchased_child_count_recursive)
+hardware_count.update(part.purchased_child_count)
 hardware_count.freeze()
 
 set_operation_name('Assemble {} Inserts'.format(hardware_count))
@@ -12,9 +12,9 @@ default_insertion_time = var('Default Insertion Time', 30, 'Insert time in secon
 rts = 0
 for child in get_child_info(type=PURCHASED, recursive=False):
     if child.purchased_component.insertion_time:
-        rts += child.purchased_component.insertion_time
+        rts += child.purchased_component.insertion_time * child.count
     else:
-        rts += default_insertion_time
+        rts += default_insertion_time * child.count
 
 runtime = var('runtime', 0, 'Runtime in hours', number, frozen=False)
 runtime.update(rts / 3600)
