@@ -1,0 +1,74 @@
+[
+  {
+    "name": "Material",
+    "path": "examples/sheet_metal/material/cost_per_sheet",
+    "is_root_operation": false,
+    "is_assembly_operation": false
+  },
+  {
+    "name": "Material Markup",
+    "path": "examples/general/material_markup_basic",
+    "is_root_operation": false,
+    "is_assembly_operation": false
+  },
+  {
+    "name": "Historical Pricing",
+    "path": "examples/general/historical_pricing",
+    "is_root_operation": false,
+    "is_assembly_operation": false
+  },
+  {
+    "name": "Historical Pricing",
+    "path": "examples/sheet_metal/material/cost_per_sheet",
+    "is_root_operation": false,
+    "is_assembly_operation": true
+  },
+  {
+    "name": "Waterjet",
+    "path": "examples/sheet_metal/blanking/waterjet",
+    "is_root_operation": false,
+    "is_assembly_operation": false
+  },
+  {
+    "name": "Hole Secondaries",
+    "path": "examples/sheet_metal/secondary_operations/hole_secondaries",
+    "is_root_operation": false,
+    "is_assembly_operation": false
+  },
+  {
+    "name": "Time Save",
+    "path": "examples/sheet_metal/deburring/time_save_with_crew",
+    "is_root_operation": false,
+    "is_assembly_operation": false
+  },
+  {
+    "name": "Deburr",
+    "path": "examples/sheet_metal/deburring/jitterbug",
+    "is_root_operation": false,
+    "is_assembly_operation": false
+  },
+  {
+    "name": "Forming",
+    "path": "examples/sheet_metal/forming/press_brake",
+    "is_root_operation": false,
+    "is_assembly_operation": false
+  },
+  {
+    "name": "Inspection",
+    "path": "examples/general/setup_time_runtime_hourly_rate",
+    "is_root_operation": false,
+    "is_assembly_operation": false
+  },
+  {
+    "name": "Hardware Insertion",
+    "path": "examples/assembly/hardware_insertion_advanced",
+    "is_root_operation": false,
+    "is_assembly_operation": true
+  },
+  {
+    "name": "Shipping",
+    "path": "examples/general/shipping_by_part_size",
+    "is_root_operation": true,
+    "is_assembly_operation": false
+  }
+]
