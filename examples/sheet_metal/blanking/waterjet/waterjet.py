@@ -1,10 +1,3 @@
-# This operation is for flat cutting operations with a water jet.
-# It references a custom table with the name waterjet_cut_rates with column names material_family, thickness, cut_rate, pierce_time.
-# You will have to setup a custom table with matching column names to get this formula to compile
-#
-# When working with runtime or setup_time in your pricing formula, time will always be in hours.  The display units
-# can be set on the operation level or when quoting.
-
 units_in()
 sheet_metal = analyze_sheet_metal()
 
@@ -12,7 +5,7 @@ setup_time = var('setup_time', 0.5, 'Setup time, specified in hours', number)
 runtime = var('runtime', 0, 'Runtime, specified in hours', number, frozen=False)
 
 thickness = var('thickness', 0, 'thickness', number, frozen=False)
-thickness.update(sheet_metal.thickness)
+thickness.update(get_workpiece_value('thickness', sheet_metal.thickness))
 thickness.freeze()
 
 cut_length = var('cut length', 0, 'inches', number, frozen=False)

@@ -5,7 +5,7 @@ units_in()
 sheet_metal = analyze_sheet_metal()
 
 thickness = var('thickness', 0, 'thickness', number, frozen=False)
-thickness.update(sheet_metal.thickness)
+thickness.update(get_workpiece_value('thickness', sheet_metal.thickness))
 thickness.freeze()
 
 laser_cut_length = var('cut length', 0, 'inches', number, frozen=False)
