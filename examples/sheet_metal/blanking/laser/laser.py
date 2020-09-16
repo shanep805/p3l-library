@@ -13,7 +13,7 @@ cut_length = var('cut length', 0, 'inches', number, frozen=False)
 cut_length.update(sheet_metal.total_cut_length)
 cut_length.freeze()
 
-pierce_count = var('pierce count', 0, 'number of times laser needs to pierce', number, frozen=False)
+pierce_count = var('pierce count', 0, 'number of times laser_cost_per_sheet needs to pierce', number, frozen=False)
 pierce_count.update(sheet_metal.pierce_count)
 pierce_count.freeze()
 
