@@ -13,7 +13,7 @@ runtime = var('runtime', 0, 'Runtime in hours', number, frozen=False)
 runtime.update(hardware_count * time_per_insert / 3600)
 runtime.freeze()
 
-rate = var('Rate', 50, '$/hr', currency)
+rate = var('Rate', 60, '$/hr', currency)
 
 PRICE = rate * runtime * part.qty
 DAYS = 0
