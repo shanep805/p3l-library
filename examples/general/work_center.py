@@ -21,10 +21,10 @@ units_in()
 setup_time = var('setup_time', 0, 'Setup time, specified in hours', number)
 runtime = var('runtime', 0, 'Runtime per part, specified in hours', number)
 
-setup_labor_rate = var('Setup Labor Rate', 0, 'Labor cost per hour to set up work center', currency)
-run_labor_rate = var('Run Labor Rate', 0, 'Labor cost per hour to attend work center machine', currency)
+setup_labor_rate = var('Setup Labor Rate', 65, 'Labor cost per hour to set up work center', currency)
+run_labor_rate = var('Run Labor Rate', 65, 'Labor cost per hour to attend work center machine', currency)
 crew = var('Crew', 1, 'Number of people assigned to attend work center', number)
-machine_rate = var('Machine Rate', 0, 'Cost per hour to keep work center machine occupied', currency)
+machine_rate = var('Machine Rate', 220, 'Cost per hour to keep work center machine occupied', currency)
 efficiency = var('Efficiency', 100, 'Percentage of real time the work center is processing parts', number)
 percent_attended = var('Percent Attended', 0, 'Percentage of time work center must be attended', number)
 

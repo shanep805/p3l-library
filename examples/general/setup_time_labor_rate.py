@@ -2,7 +2,7 @@
 
 # A - Define Setup Time and Labor Rate variables
 setup_time = var('setup_time', 0, '', number)
-labor_rate = var('Labor Rate ($)', 0, '', currency)
+labor_rate = var('Labor Rate ($)', 65, '', currency)
 
 # B - Compile costs
 PRICE = setup_time * labor_rate

@@ -7,7 +7,7 @@ additive = analyze_additive()
 if part.material:
     set_operation_name(part.material)
 
-price_per_vol = var('Price Per Cubic Inch', 0, '', currency, frozen=False)
+price_per_vol = var('Price Per Cubic Inch', 1, '', currency, frozen=False)
 price_per_vol.update(part.mat_cost_per_volume)
 price_per_vol.freeze()
 

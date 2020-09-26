@@ -3,6 +3,6 @@
 # as the buyer has the discretion to include this into the order item or not
 
 setup_time = var('setup_time', 0, '', number)
-labor_rate = var('Labor Rate ($)', 0, '', currency)
+labor_rate = var('Labor Rate ($)', 75, '', currency)
 
 PRICE = setup_time * labor_rate

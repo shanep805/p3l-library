@@ -1,7 +1,7 @@
 # define variables
 setup_time = var('setup_time', 0, '', number)
 runtime = var('runtime', 0, '', number)
-hourly_rate = var('Rate ($/hr)', 0, '', currency)
+hourly_rate = var('Rate ($/hr)', 65, '', currency)
 
 setup_cost = setup_time * hourly_rate
 cycle_cost = runtime * part.qty * hourly_rate
